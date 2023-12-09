@@ -12,22 +12,23 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    {
+    { 
         Schema::create('photos', function (Blueprint $table) {
-           $table->id();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('category_id')->nullable()->constrained();
             $table->string('name');
             $table->string('photo_file');
-            $table-> unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('description')->nullable();
             $table->string('location')->nullable();
             $table->string('tag')->nullable();
             $table->dateTime('date_taken')->nullable();
             $table->timestamps();
+
+
+ //
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photos');
+         Schema::dropIfExists('upload');//
     }
 };
