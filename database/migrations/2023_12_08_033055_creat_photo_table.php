@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('category_id')->nullable()->constrained();
             $table->string('name');
-            $table->string('photo_file');
+            $table->string('photo_file')->default('images/default_photo.jpg');
             $table->text('description')->nullable();
             $table->string('location')->nullable();
             $table->string('tag')->nullable();
@@ -32,11 +32,11 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
+     * 
+     *@return viod
      */
     public function down()
     {
-         Schema::dropIfExists('upload');//
+         Schema::dropIfExists('photos');//
     }
 };

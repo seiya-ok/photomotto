@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Category; // Fix the namespace
 
 class CategoryController extends Controller
 {
-        public function index()
+    public function index()
     {
         $categories = Category::all();
         return view('categories.index', compact('categories'));
@@ -31,6 +31,4 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')
             ->with('success', 'Category created successfully.');
     }
-
 }
-

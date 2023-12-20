@@ -2,50 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Photo;
 use Illuminate\Http\Request;
-use App\Model\Photo;
-use App\Model\Category;
+use App\Models\Category;
 use Auth;
 
-class UploadController extends Controller
+class PhotoController extends Controller
 {
-  public function index()
-  {
-     $photos = Photo::all(); 
-     
-     return view('photos.index',compact('photos'));
-  }
-  
-  public function create()
-  {
-    $categories = Category::all();
-    
-    return view('photos.create',compact('categories'));
-  }
-  
-  public function store (Request $reqest)
-  {
-    $request->validate([
-      'name' => 'required',
-      'photo_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-      ]);
-      
-      $imagePath = $reqest->file('photo_file')->store('photos','public');
-      
-      Photo::create([
-        'user_id' => Auth::id(),
-        'category_id' => $request->category_id,
-        'name' => $request->name,
-        'photo_file' => $imagePath,
-        'description' => $request->description,
-        'location' => $request->location,
-        'tag' => $request->tag,
-        'date_taken' => $request->date_taken,
+    public function index()
+    {
+        $photos = Photo::paginate(config('app.pagination_count',10)); 
+        return view('photos.index', compact('photos'));
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+        return view('photos.create', compact('categories'));
+    }
+    public function show(Photo $photo)
+    {
+        return view('photos.show')->with(['photo' => $photo]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'photo_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required|exists:categories,id',
+            'date_taken' => 'date', 
         ]);
+
+        $imagePath = $request->file('photo_file')->store(config('app.photo_directory','photos'), 'public');
+
+        $photoData = [
+            'user_id' => Auth::id(),
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'photo_file' => $imagePath,
+            'description' => $request->description,
+            'location' => $request->location,
+            'tag' => $request->tag,
+            'date_taken' => $request->date_taken,
+        ];
         
-      return redirect()->route('photos.index')
-           ->with('success', 'Image uploaded successfully.');
-  }
-  
-  
+        $photo = Photo::create($photoData);
+        
+        return redirect()->route('photos.show',$photo)->with('success','写真が保存されました。');
+
+    }
+   
 }
