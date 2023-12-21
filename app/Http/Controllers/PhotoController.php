@@ -18,6 +18,7 @@ class PhotoController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $photo = new Photo;
         return view('photos.create', compact('categories'));
     }
     public function show(Photo $photo)
@@ -31,18 +32,19 @@ class PhotoController extends Controller
             'name' => 'required',
             'photo_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category_id' => 'required|exists:categories,id',
-            'date_taken' => 'date', 
+            'date_taken' => 'date',
+            'location' => 'required', 
         ]);
 
         $imagePath = $request->file('photo_file')->store(config('app.photo_directory','photos'), 'public');
 
         $photoData = [
-            'user_id' => Auth::id(),
+             'user_id' => Auth::id(),
             'category_id' => $request->category_id,
             'name' => $request->name,
             'photo_file' => $imagePath,
             'description' => $request->description,
-            'location' => $request->location,
+            'location' => $request->location, 
             'tag' => $request->tag,
             'date_taken' => $request->date_taken,
         ];

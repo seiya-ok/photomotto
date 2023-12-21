@@ -4,50 +4,47 @@
             　Photo Motto
         </x-slot>
     <div class="container">
-        <h1>Create a New Photo</h1>
+        <h1>写真情報アップロード</h1>
         
         <form action="{{ route('photos.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-            
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name" required>
-            <br>
-            
-            
-              <label for="category">Category:</label>
-            <select name="category" id="category" required>
-                <option value="landscape">Landscape</option>
-                <option value="portrait">Portrait</option>
-               
-            </select>
-            <br>
-            
+           <div class="name">
+               <label for="photo_title">作品名</label>
+               <input type="text" id="photo_name" name="photo[name]" placeholder="作品名" required>
+           </div>
            
-            <label for="description">Description:</label>
-            <textarea name="description" id="description" required></textarea>
-            <br>
+            <div class="location">
+               <label for="photo_location">撮影場所</label>
+               <input type="text" id="photo_location" name="photo[location]" placeholder="撮影地" required>
+           </div>
+           <div class="optional-description-label">
+         　 <label for="photo_description">説明文[任意]</label>
+         　 </div>
             
-          
-            <label for="location">Location:</label>
-            <input type="text" name="location" id="location" required>
-            <br>
-            
+            <div class="description">
+               <textarea id="photo_description" name="photo[description]" maxlength="250" placeholder="こちらに写真の説明をご記入ください."></textarea>
+            </div>
            
-            <label for="tag">Tag:</label>
-            <input type="text" name="tag" id="tag" required>
-            <br>
-            
-            
-            <label for="date_taken">Date Taken:</label>
-            <input type="date" name="date_taken" id="date_taken" required>
-            <br>
-            
-            
-            <label for="photo">Photo:</label>
-            <input type="file" name="photo" id="photo" accept="image/*" required>
-            <br>
-            
-            <button type="submit">Create Photo</button>
-        </form>
+           <div>
+                <label for="photo">写真選択:</label>
+                <input type="file" name="photo" accept="image/*">
+           </div>
+           <button class="rounded-md bg-gray-800 text-white px-2 py-1" onClick="submit();">[投稿する]</button>
+         </form>
+         <br>
+        <button class="rounded-md bg-gray-800 text-white px-1 py-0.5" onClick="history.back();">戻る</button>
+          @if ($errors->any())
+            <div class="alert alert-danger mt-3">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
-</x-app-layout>
+</x-app-layout>  
+        
+                
+
+        

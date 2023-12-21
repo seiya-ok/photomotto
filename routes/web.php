@@ -31,9 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
    
     // Photo Routes
-   Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
+    Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
     Route::get('/photos/create',[PhotoController::class, 'create'])->name('photos.create');
-    Route::post('/photos', [PhotoController::class, 'store'])->name('photos.store');
+    Route::post('/photos',[PhotoController::class, 'store'])->name('photos.store');
     Route::get('/photos/{photo}', [PhotoController::class, 'show'])->name('photos.show');
     Route::get('/photos/{photo}/edit', [PhotoController::class, 'edit'])->name('photos.edit');
     Route::put('/photos/{photo}', [PhotoController::class, 'update'])->name('photos.update');
