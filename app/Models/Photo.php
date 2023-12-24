@@ -18,6 +18,10 @@ class Photo extends Model
         'location',
         'tag',
         'date_taken',
+        'camerabody',
+        'cameralens',
+        'camerasoft',
+        ''
     ];
     
     public function user()

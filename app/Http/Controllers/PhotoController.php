@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Photo;
+use App\Https\Requests\PhotoRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Auth;
+use Cloudinary;
 
 class PhotoController extends Controller
 {
@@ -23,36 +25,37 @@ class PhotoController extends Controller
     }
     public function show(Photo $photo)
     {
-        return view('photos.show')->with(['photo' => $photo]);
+       return view('photos.show')->with(['photo' => $photo]);
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'photo_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'date_taken' => 'date',
-            'location' => 'required', 
-        ]);
+{
+    //   $request->validate([
+    //     'photo.name' => 'required',
+    //     'photo.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    //     'photo.category_id' => 'required|exists:categories,id',
+    //     'photo.date_taken' => 'date',
+    //     'photo.location' => 'required',
+    // ]);
 
-        $imagePath = $request->file('photo_file')->store(config('app.photo_directory','photos'), 'public');
+    $photo = new Photo;
 
-        $photoData = [
-             'user_id' => Auth::id(),
-            'category_id' => $request->category_id,
-            'name' => $request->name,
-            'photo_file' => $imagePath,
-            'description' => $request->description,
-            'location' => $request->location, 
-            'tag' => $request->tag,
-            'date_taken' => $request->date_taken,
-        ];
-        
-        $photo = Photo::create($photoData);
-        
-        return redirect()->route('photos.show',$photo)->with('success','写真が保存されました。');
+    $photo->name = $request->input('photo.name');
+    $photo->category_id = $request->input('photo.category_id');
+    $photo->date_taken = $request->input('photo.date_taken');
+    $photo->location = $request->input('photo.location');
+    $photo->camerabody = $request->input('photo.camerabody');
+    $photo->cameralens = $request->input('photo.cameralens');
+    $photo->camerasoft = $request->input('photo.camerasoft');
+    $photo->description = $request->input('photo.description');
+    $image_url = Cloudinary::upload($request->file('photo.image')->getRealPath())->getSecurePath();
 
-    }
-   
+    // データベースに画像の URL を保存
+    $photo->photo_file = $image_url;
+
+    $photo->save();
+
+    return redirect('/photos/' . $photo->id);
+}
+    
 }

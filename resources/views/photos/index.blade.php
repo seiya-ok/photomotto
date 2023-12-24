@@ -4,29 +4,10 @@
     </x-slot>
 
     <h1>Photo Motto</h1>
+    <a href='/photos/create'>
+        <button class="rounded-md bg-gray-800 text-white px-2 py-1" onclick="submit();">[写真投稿⇧]</button>
+    </a>
 
-    <div class='photos'>
-        @forelse($photos as $photo)
-            <div class='photo'>
-                <h2 class='title'>{{ $photo->name }}</h2>
-                <img src="{{ asset('storage/' . $photo->photo_file) }}" alt="{{ $photo->name }}" style="max-width: 300px">
-                <p class='description'>{{ $photo->description }}</p>
-                <p class='location'>Location: {{ $photo->location }}</p>
-                <p class='tag'>Tag: {{ $photo->tag }}</p>
-                <p class='date_taken'>Date Taken: {{ $photo->date_taken }}</p>
-                @if ($photo->id)
-                    <a href="{{ route('photos.show', ['photo' => $photo->id]) }}">View Details</a>
-                @else
-                    <p>Error: Photo ID is missing or null.</p>
-                @endif
-            </div>
-        @empty
-            <p>No photos available</p>
-        @endforelse
-        {{ $photos->links('pagination::bootstrap-4')}}
-    </div>
-
-    <a href='/photos/create'>[⇧投稿する]</a>
     @if ($errors->any())
         <div class="alert alert-danger mt-3">
             <ul>
@@ -37,8 +18,50 @@
         </div>
     @endif
 
+    <body class="antialiased">
+        <h1>Blog Name</h1>
+        <a href='/photos/show'>
+            <button class="rounded-md bg-gray-800 text-white px-2 py-1" onclick="lsubmit();">写真一覧</button>
+        </a>
+
+        <div class='photos'>
+            @foreach ($photos as $photo)
+                <div class='photo'>
+                    <a href="/photos/{{ $photo->id }}">
+                        <h2 class='title'>
+                            @if ($photo->name)
+                                {{ $photo->name }}
+                            @elseif ($photo->title)
+                                {{ $photo->title }}
+                            @endif
+                        </h2>
+                    </a>
+                    <p class='body'>{{ $photo->body }}</p>
+
+                    <form action="/photos/{{ $photo->id }}" id="form_{{ $photo->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+
+                    <button type="button" onclick="deletePost('{{ $photo->id }}')">[消去]</button>
+                </div>
+            @endforeach
+        </div>
+
+        <div class='paginate'>{{ $photos->links() }} </div>
+    </body>
+
+    <script>
+        function deletePost(id) {
+            'use strict'
+
+            if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                document.getElementById(`form_${id}`).submit();
+            }
+        }
+    </script>
+
     <h2 class='title'>
-        {{-- Assuming $photo->title exists --}}
-        <a href="/photos/{{ $photo->id }}">{{ $photo->title }}</a>
+        {{ Auth::user()->name }}
     </h2>
 </x-app-layout>

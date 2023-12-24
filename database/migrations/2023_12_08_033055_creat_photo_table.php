@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('tag')->nullable();
             $table->dateTime('date_taken')->nullable();
             $table->timestamps();
+            $table->id();
 
 
  //
