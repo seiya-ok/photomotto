@@ -21,7 +21,7 @@ class Photo extends Model
         'camerabody',
         'cameralens',
         'camerasoft',
-        ''
+       
     ];
     
     public function user()

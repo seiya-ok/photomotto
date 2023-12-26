@@ -16,6 +16,6 @@ class PhotoSeeder extends Seeder
      */
     public function run()
     {
-       \Database\Factories\PhotoFactory::new()->count(10)->create();
+       Database\Factories\PhotoFactory::new()->count(10)->create();
     }
 }

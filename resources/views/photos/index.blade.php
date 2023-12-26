@@ -20,8 +20,8 @@
 
     <body class="antialiased">
         <h1>Blog Name</h1>
-        <a href='/photos/show'>
-            <button class="rounded-md bg-gray-800 text-white px-2 py-1" onclick="lsubmit();">写真一覧</button>
+        <a href='/photos/list'>
+            <button class="rounded-md bg-gray-800 text-white px-2 py-1" onclick="submit();">写真一覧</button>
         </a>
 
         <div class='photos'>
@@ -42,8 +42,6 @@
                         @csrf
                         @method('DELETE')
                     </form>
-
-                    <button type="button" onclick="deletePost('{{ $photo->id }}')">[消去]</button>
                 </div>
             @endforeach
         </div>

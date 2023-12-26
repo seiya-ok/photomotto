@@ -14,20 +14,18 @@ return new class extends Migration
     public function up()
     { 
         Schema::create('photos', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('category_id')->nullable()->constrained();
             $table->string('name');
             $table->string('photo_file')->default('images/default_photo.jpg');
             $table->text('description')->nullable();
             $table->string('location')->nullable();
+            $table->string('image_url');
             $table->string('tag')->nullable();
             $table->dateTime('date_taken')->nullable();
             $table->timestamps();
-            $table->id();
-
-
- //
-        });
+    });
     }
 
 
@@ -39,5 +37,7 @@ return new class extends Migration
     public function down()
     {
          Schema::dropIfExists('photos');//
+          
+
     }
 };
