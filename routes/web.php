@@ -33,15 +33,14 @@ Route::middleware('auth')->group(function () {
     // Photo Routes
     Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
     Route::get('/photos/create',[PhotoController::class, 'create'])->name('photos.create');
-    Route::get('/photos/show',[PhotoController::class, 'show'])->name('photos.show');
     Route::post('/photos',[PhotoController::class, 'store'])->name('photos.store');
-    Route::get('/photos/{photo}', [PhotoController::class, 'show'])->name('photos.show');
+    Route::get('/photos/show/{photo}', [PhotoController::class, 'show'])->name('photos.show');
     Route::get('/photos/{photo}', [PhotoController::class, 'list'])->name('photos.list');
     Route::get('/photos/{photo}/edit', [PhotoController::class, 'edit'])->name('photos.edit');
     Route::put('/photos/{photo}', [PhotoController::class, 'update'])->name('photos.update');
-    Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
     Route::post('/photos/upload', [PhotoController::class, 'upload'])->name('photos.upload'); // 
-    
+    Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
+   
     // Category Routes
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
@@ -50,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    
     
 });
 

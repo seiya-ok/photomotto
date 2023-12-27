@@ -59,9 +59,9 @@ class PhotoController extends Controller
     $photo->category_id = $request->input('photo.category_id');
     $photo->date_taken = $request->input('photo.date_taken');
     $photo->location = $request->input('photo.location');
-    $photo->camerabody = $request->input('camerabody');
-    $photo->cameralens = $request->input('cameralens');
-    $photo->camerasoft = $request->input('camerasoft');
+    $photo->camerabody = $request->input('photo.camerabody');
+    $photo->cameralens = $request->input('photo.cameralens');
+    $photo->camerasoft = $request->input('photo.camerasoft');
     $photo->description = $request->input('photo.description');
     $image_url = Cloudinary::upload($request->file('photo.image')->getRealPath())->getSecurePath();
 
@@ -70,7 +70,8 @@ class PhotoController extends Controller
 
     $photo->save();
 
-    return redirect('/photos/' . $photo->id);
+     return redirect()->route('photos.show', ['photo' => $photo->id]);
+    //return redirect('/photos/' . $photo->id);
 }
     
 }
