@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
                     <br><br>
-                    <a href="{{ route('photos.index') }}">[あなたの作品]</a>
+                    <a href="{{ route('photos.index') }}">[フォットモット←]</a>
                 </div>
             </div>
         </div>

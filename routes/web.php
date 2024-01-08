@@ -24,6 +24,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/photos/search', function () {
+    return view('photos.search');
+})->name('search');
+
 Route::middleware('auth')->group(function () {
     //Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,6 +36,7 @@ Route::middleware('auth')->group(function () {
    
     // Photo Routes
     Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
+    Route::get('/photos/search', [PhotoController::class, 'search'])->name('photos.search');
     Route::get('/photos/create',[PhotoController::class, 'create'])->name('photos.create');
     Route::post('/photos',[PhotoController::class, 'store'])->name('photos.store');
     Route::get('/photos/show/{photo}', [PhotoController::class, 'show'])->name('photos.show');
@@ -39,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/photos/{photo}/edit', [PhotoController::class, 'edit'])->name('photos.edit');
     Route::put('/photos/{photo}', [PhotoController::class, 'update'])->name('photos.update');
     Route::post('/photos/upload', [PhotoController::class, 'upload'])->name('photos.upload'); // 
-    Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
+    Route::delete('/photos/{photo}', [PhotoController::class, 'delete'])->name('photos.delete');
    
     // Category Routes
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     { 
         Schema::create('photos', function (Blueprint $table) {
-           $table->id();
+        $table->id();
         $table->foreignId('user_id')->nullable()->constrained();
         $table->foreignId('category_id')->nullable()->constrained();
         $table->string('name');
@@ -26,6 +26,7 @@ return new class extends Migration
         $table->text('description')->nullable();
         $table->string('tag')->nullable();
         $table->dateTime('date_taken')->nullable();
+        $table->softDeletes();
         $table->timestamps();
     });
     }

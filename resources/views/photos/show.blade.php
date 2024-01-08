@@ -25,5 +25,19 @@
      <div style="text-align: left; margin-left: 20px;">
           <button class="rounded-md bg-gray-800 text-white px-1 py-0.5" onClick="history.back();">戻る</button>
      </div>
+     <form action="/photos/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">
+                    @csrf 
+   　　　　　　　  　　　　　 @method('DELETE')
+                    <button type="submit" class="rounded-md bg-gray-800 text-white px-1 py-0.5"  onclick="deletePost('{{ $photo->id }}')">[消去]</button>
+    </form>
+     <script>
+            function deletePost(id) {
+                'use strict'
+                
+                if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                    document.getElementById(`form_${id}`).submit();
+                }
+            }
+        </script>
    </body>
 </x-app-layout>

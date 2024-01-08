@@ -74,4 +74,25 @@ class PhotoController extends Controller
     //return redirect('/photos/' . $photo->id);
 }
     
+    public function delete(Photo $photo)
+    {
+        $photo->delete();
+        return redirect('/photos/list');
+    }
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        
+        $photos = Photo::where('name','like','%'.$query. '%')
+          ->orWhere('description', 'like', '%' . $query . '%')
+          ->orWhere('location', 'like', '%' . $query . '%')
+          ->orWhere('camerabody', 'like', '%' . $query . '%')
+          ->orWhere('cameralens', 'like', '%' . $query . '%')
+          ->orWhere('camerasoft', 'like', '%' . $query . '%')
+          ->paginate(config('app.pagination_count', 10));
+          
+           return view('photos.search', compact('photos','query'));
+    }
+    
 }

@@ -3,25 +3,52 @@
             　Photo Motto
     </x-slot>
     
+    <style>
+          .photos{
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-between;
+         }
+         
+         .photo {
+            width: calc(33.33% - 10px); 
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            text-align: center;
+         }
+         
+         .photo img {
+             max-width: 50%;
+             height: auto;
+         }
+    </style>
+    
     <div class="container">
         @auth
-        <h1>Welcome,{{ Auth::user()->name}}</h1> 
+        <h1>[{{ Auth::user()->name}}]</h1> 
         @else
         <h1>Welcome, Guest</h1>
         @endauth
-        <h2>Photo List</h2>
         
         <div class="photos">
             @foreach ($photos as $photo)
                <div class="photo">
                    <a href="{{ route('photos.show', $photo->id)}}">
-                       <h3 class='title'>
-                           {{ $photo->name}}
-                       </h3>
-                       <a>
+                       <img src="{{ $photo->photo_file}}" alt="{{ $photo->name }}" width="400" height="auto">
+                       </a>
                 </div>
-                 <button type="button" onclick="deletePost('{{ $photo->id }}')">[消去]</button>
-            @endforeach
+               
+           <script>
+            function deletePost(id) {
+              'use strict'
+              
+              
+              if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+            document.getElementById(`form_${id}`).submit();
+               }
+              }
+           </script>
+          @endforeach
         </div>
         
         <div class='paginate'>

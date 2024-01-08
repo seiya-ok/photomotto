@@ -2,8 +2,15 @@
     <x-slot name="header">
         Photo Motto
     </x-slot>
+    <div class="search-form">
+    <form action="{{ route('photos.search') }}" method="get">
+        @csrf
+        <input type="text" name="query" placeholder="写真を検索">
+        <button class="rounded-md bg-gray-800 text-white px-2 py-1" type="submit">検索</button>
+    </form>
+　　</div>
 
-    <h1>Photo Motto</h1>
+    <h1>Photo Upload </h1>
     <a href='/photos/create'>
         <button class="rounded-md bg-gray-800 text-white px-2 py-1" onclick="submit();">[写真投稿⇧]</button>
     </a>
@@ -19,32 +26,10 @@
     @endif
 
     <body class="antialiased">
-        <h1>Blog Name</h1>
+        <h1>Photo list</h1>
         <a href='/photos/list'>
             <button class="rounded-md bg-gray-800 text-white px-2 py-1" onclick="submit();">写真一覧</button>
         </a>
-
-        <div class='photos'>
-            @foreach ($photos as $photo)
-                <div class='photo'>
-                    <a href="/photos/{{ $photo->id }}">
-                        <h2 class='title'>
-                            @if ($photo->name)
-                                {{ $photo->name }}
-                            @elseif ($photo->title)
-                                {{ $photo->title }}
-                            @endif
-                        </h2>
-                    </a>
-                    <p class='body'>{{ $photo->body }}</p>
-
-                    <form action="/photos/{{ $photo->id }}" id="form_{{ $photo->id }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                </div>
-            @endforeach
-        </div>
 
         <div class='paginate'>{{ $photos->links() }} </div>
     </body>
