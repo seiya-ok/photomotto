@@ -32,22 +32,7 @@
         </a>
 
         <div class='paginate'>{{ $photos->links() }} </div>
-        
-        @foreach ($photos as $photo)
-        <div class="photo">
-            <a href="{{ route('photos.show' ,  $photo->id)}}">
-                <img src="{{ $photo->photo_file }}" alt="{{ $photo->name }}" width="400" height="auto">
-            </a>
-             @if(auth()->check() && $photo->user_id == auth()->id())
-                    <!-- Only show delete button if the authenticated user is the owner of the photo -->
-                    <form action="{{ route('photos.destroy', $photo->id) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" onclick="deletePost('{{ $photo->id }}')">削除</button>
-                    </form>
-                @endif
-            </div>
-        @endforeach
+    
     </body>
 
     <script>

@@ -24,12 +24,17 @@
      </div>
      <div style="text-align: left; margin-left: 20px;">
           <button class="rounded-md bg-gray-800 text-white px-1 py-0.5" onClick="history.back();">戻る</button>
-     </div>
+          
+          @if(auth()->check() && $photo->user_id == auth()->id())
+          
      <form action="/photos/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">
                     @csrf 
    　　　　　　　  　　　　　 @method('DELETE')
                     <button type="submit" class="rounded-md bg-gray-800 text-white px-1 py-0.5"  onclick="deletePost('{{ $photo->id }}')">[消去]</button>
+    
     </form>
+    @endif
+    </div>
      <script>
             function deletePost(id) {
                 'use strict'
