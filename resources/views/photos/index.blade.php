@@ -32,6 +32,7 @@
         </a>
 
         <div class='paginate'>{{ $photos->links() }} </div>
+    
     </body>
 
     <script>
