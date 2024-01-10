@@ -28,9 +28,7 @@
      <form action="/photos/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">
                     @csrf 
    　　　　　　　  　　　　　 @method('DELETE')
-                    <button type="submit" class="rounded-md bg-gray-800 text-white px-1 py-0.5"  onclick="deletePost('{{ $photo->id }}')">[消去]</button>
-    
-    </form>
+                    <button type="submit" class="rounded-md bg-gray-800 text-white px-1 py-0.5"  onclick="deletePost('{{ $photo->id }}')">[消去]</button></form>
     
      <script>
             function deletePost(id) {
