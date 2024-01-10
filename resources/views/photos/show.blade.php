@@ -29,6 +29,7 @@
                     @csrf 
    　　　　　　　  　　　　　 @method('DELETE')
                     <button type="submit" class="rounded-md bg-gray-800 text-white px-1 py-0.5"  onclick="deletePost('{{ $photo->id }}')">[消去]</button>
+    
     </form>
     
      <script>
