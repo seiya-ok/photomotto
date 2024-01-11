@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/photos/search', [PhotoController::class, 'search'])->name('photos.search');
     Route::get('/photos/create',[PhotoController::class, 'create'])->name('photos.create');
     Route::post('/photos',[PhotoController::class, 'store'])->name('photos.store');
+    Route::post('/photos/like', [PhotoController::class, 'like'])->name('photos.like');
     Route::get('/photos/show/{photo}', [PhotoController::class, 'show'])->name('photos.show');
     Route::get('/photos/{photo}', [PhotoController::class, 'list'])->name('photos.list');
     Route::get('/photos/{photo}/edit', [PhotoController::class, 'edit'])->name('photos.edit');

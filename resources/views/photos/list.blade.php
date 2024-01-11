@@ -36,6 +36,20 @@
                    <a href="{{ route('photos.show', $photo->id)}}">
                        <img src="{{ $photo->photo_file}}" alt="{{ $photo->name }}" width="400" height="auto">
                        </a>
+                @auth
+                <!-- Post.phpに作ったisLikedByメソッドをここで使用 -->
+                @if (!$photo->isLikedBy(Auth::user()))
+                    <span class="likes">
+                        <i class="fas fa-heart like-toggle" data-photo-id="{{ $photo->id }}"></i>
+                    <span class="like-counter">{{$photo->likes_count}}</span>
+                    </span><!-- /.likes -->
+                @else
+                    <span class="likes">
+                        <i class="fas fa-heart heart like-toggle liked" data-photo-id="{{ $photo->id }}"></i>
+                    <span class="like-counter">{{$photo->likes_count}}</span>
+                    </span><!-- /.likes -->
+                @endif
+                @endauth
                 </div>
                
            <script>

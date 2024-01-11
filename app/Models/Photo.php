@@ -42,6 +42,16 @@ class Photo extends Model
     public function getPaginateByLimit(int $limit_count = 10)
 {
     // updated_atで降順に並べたあと、limitで件数制限をかける
-    return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    return $this->withCount('likes')->orderBy('updated_at', 'DESC')->paginate($limit_count);
+}
+   public function likes()
+{
+    return $this->hasMany('App\Models\Like');
+}
+
+// 実装2
+// Viewで使う、いいねされているかを判定するメソッド。
+public function isLikedBy($user): bool {
+    return Like::where('user_id', $user->id)->where('photo_id', $this->id)->first() !==null;
 }
 }
