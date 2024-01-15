@@ -3,7 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PhotoController; 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +58,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    
+    //Chat Routes
+    Route::get('/chat/{user}', [ChatController::class, 'openChat']);
+    Route::post('/chat', [ChatController::class, 'sendMessage']);
     
     
 });

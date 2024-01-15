@@ -31,7 +31,7 @@ class PhotoController extends Controller
     
     public function list()
     {
-        $photos = Photo::withCount('likes')->paginate(config('app.pagination_count',10));
+         $photos = Photo::withCount('likes')->paginate(config('app.pagination_count', 10));
         $user = Auth::user();
         return view('photos.list', compact('photos','user'));
     }

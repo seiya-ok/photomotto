@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('chat_id')->nullable()->references('id')->on('chats')->onDelete('cascade');
-            $table->string('body');
+             $table->foreignId('user_id')->constrained()->onDelete('cascade');   
+        //'user_id' は 'usersテーブル' の 'id' を参照する外部キーです
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('posts');
     }
 };
