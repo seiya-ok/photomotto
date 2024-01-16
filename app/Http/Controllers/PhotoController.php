@@ -33,6 +33,7 @@ class PhotoController extends Controller
     {
          $photos = Photo::withCount('likes')->paginate(config('app.pagination_count', 10));
         $user = Auth::user();
+        
         return view('photos.list', compact('photos','user'));
     }
 
@@ -57,6 +58,7 @@ class PhotoController extends Controller
     //dd($request);
     //dd($photo);
     $photo->name = $request->input('photo.name');
+    $photo->user_id = \Auth::id();
     $photo->category_id = $request->input('photo.category_id');
     $photo->date_taken = $request->input('photo.date_taken');
     $photo->location = $request->input('photo.location');

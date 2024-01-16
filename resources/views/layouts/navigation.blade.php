@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('photos.index')" :active="request()->routeIs('photos.index')">
                         {{ __('写真投稿一覧') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('chatlist')" :active="request()->routeIs('chatlist')">
+                        {{ __('チャット一覧') }}
+                    </x-nav-link>
                     
                 </div>
             </div>

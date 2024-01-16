@@ -3,14 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Library\Chat;
-use App\Model\Room;
+use App\Models\Room;
+use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\User;
 use App\Events\MessageSent;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class ChatController extends Controller
 {
+    public function chatList()
+    {
+         $userId = \Auth::id();
+        $chats = DB::table('chats')
+        ->where('owner_id', $userId)
+        ->orWhere('guest_id', $userId)
+        ->get();
+    
+        $users = [];
+    
+    foreach ($chats as $chat) {
+        $oppositeUserId = ($chat->owner_id == $userId) ? $chat->guest_id : $chat->owner_id;
+    
+        $oppositeUser = User::find($oppositeUserId);
+    
+        if ($oppositeUser) {
+        $users[] = $oppositeUser;
+      }
+     }
+     return view('photos/chatlist')->with(['users'=>$users]);
+    }
   public function openChat(User $user)
     {
         // 自分と相手のIDを取得
@@ -37,7 +61,7 @@ class ChatController extends Controller
         $messages = Message::where('chat_id', $chat->id)->orderBy('updated_at', 'DESC')->get();;
 
 
-        return view('chats/chat')->with(['chat' => $chat, 'messages' => $messages,]);
+        return view('photos/chat')->with(['chat' => $chat, 'messages' => $messages,]);
     }
     // メッセージ送信時の処理
     public function sendMessage(Message $message, Request $request,)

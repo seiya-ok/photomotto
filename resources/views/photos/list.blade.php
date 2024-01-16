@@ -36,6 +36,7 @@
                    <a href="{{ route('photos.show', $photo->id)}}">
                        <img src="{{ $photo->photo_file}}" alt="{{ $photo->name }}" width="400" height="auto">
                        </a>
+                        <a href="/chat/{{ $photo->user->id }}">{{ $photo->user->name }}とチャットする</a>
                 @auth
                 <!-- Post.phpに作ったisLikedByメソッドをここで使用 -->
                 @if (!$photo->isLikedBy(Auth::user()))

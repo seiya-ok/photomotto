@@ -48,5 +48,5 @@
     <h2 class='title'>
         {{ Auth::user()->name }}
     </h2>
-    <a href="/chat/{{ $post->user->id }}">{{ $post->user->name }}とチャットする</a>
+   
 </x-app-layout>]
