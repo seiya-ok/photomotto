@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     
     //Chat Routes
+    Route::get('/chat/list', [ChatController::class, 'chatList'])->name('chatlist');
     Route::get('/chat/{user}', [ChatController::class, 'openChat']);
     Route::post('/chat', [ChatController::class, 'sendMessage']);
     
