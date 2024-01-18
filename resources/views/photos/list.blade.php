@@ -38,7 +38,9 @@
                    <a href="{{ route('photos.show', $photo->id)}}">
                        <img src="{{ $photo->photo_file}}" alt="{{ $photo->name }}" width="400" height="auto">
                        </a>
+                       @if ($photo->user)
                         <a href="/chat/{{ $photo->user->id }}">{{ $photo->user->name }}とチャットする</a>
+                       @endif
                 @auth
                 <!-- Post.phpに作ったisLikedByメソッドをここで使用 -->
                 @if (!$photo->isLikedBy(Auth::user()))
@@ -54,20 +56,10 @@
                 @endif
                 @endauth
                 </div>
-               
-           <script>
-            function deletePost(id) {
-              'use strict'
-              
-              
-              if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
-            document.getElementById(`form_${id}`).submit();
-               }
-              }
-           </script>
-           @endif
+                 @endif
           @endforeach
         </div>
+         
         
         <div class='paginate'>
             {{ $photos->links() }}
