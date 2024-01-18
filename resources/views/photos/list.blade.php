@@ -32,6 +32,8 @@
         
         <div class="photos">
             @foreach ($photos as $photo)
+            
+            @if ($photo)
                <div class="photo">
                    <a href="{{ route('photos.show', $photo->id)}}">
                        <img src="{{ $photo->photo_file}}" alt="{{ $photo->name }}" width="400" height="auto">
@@ -63,6 +65,7 @@
                }
               }
            </script>
+           @endif
           @endforeach
         </div>
         
